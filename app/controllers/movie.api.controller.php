@@ -59,6 +59,9 @@ class MovieApiController
     // api/movies/:id (DELETE)
     public function delete($req, $res)
     {
+        if (!$res->user) {
+            return $this->view->response("No autorizado", 401);
+        }
         $id = $req->params->id;
         $movie = $this->model->getMovie($id);
         if (!$movie) {
@@ -71,6 +74,9 @@ class MovieApiController
     // api/movies (POST)
     public function create($req, $res)
     {
+        if (!$res->user) {
+            return $this->view->response("No autorizado", 401);
+        }
         if (
             empty($req->body->title) ||
             empty($req->body->description) ||
@@ -113,6 +119,9 @@ class MovieApiController
     // api/movies/:id (PUT)
     public function update($req, $res)
     {
+        if (!$res->user) {
+            return $this->view->response("No autorizado", 401);
+        }
         $id = $req->params->id;
         $movie = $this->model->getMovie($id);
         if (!$movie) {
